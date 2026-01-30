@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Mentor Wave CUET</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Additional styles for messaging interface */
+        .messaging-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 0;
+            height: calc(100vh - 60px);
+        }
+
+        .conversations-list {
+            background-color: var(--white);
+            border-right: 1px solid var(--light-dark);
+            overflow-y: auto;
+        }
+
+        .conversations-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--light-dark);
+        }
+
+        .conversations-header h2 {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--light-dark);
+            border-radius: var(--border-radius);
+        }
+
+        .conversation-item {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--light-dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .conversation-item:hover {
+            background-color: var(--light);
+        }
+
+        .conversation-item.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .conversation-item.active .conversation-preview,
+        .conversation-item.active .conversation-time {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .conversation-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .conversation-name {
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .conversation-time {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .conversation-preview {
+            font-size: 0.875rem;
+            color: var(--gray);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .unread-badge {
+            background-color: var(--danger);
+            color: var(--white);
+            font-size: 0.625rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--light);
+        }
+
+        .chat-header {
+            background-color: var(--white);
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--light-dark);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .chat-header h3 {
+            flex: 1;
+            font-size: 1.25rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .message {
+            max-width: 70%;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-lg);
+            position: relative;
+        }
+
+        .message-sent {
+            align-self: flex-end;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-received {
+            align-self: flex-start;
+            background-color: var(--white);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-text {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .chat-input-container {
+            background-color: var(--white);
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--light-dark);
+        }
+
+        .chat-input-form {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: var(--spacing-md);
+            border: 1px solid var(--light-dark);
+            border-radius: var(--border-radius-lg);
+            resize: none;
+            max-height: 100px;
+        }
+
+        .send-btn {
+            padding: var(--spacing-md) var(--spacing-xl);
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius-lg);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .send-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--gray);
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        @media (max-width: 768px) {
+            .messaging-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .conversations-list {
+                display: none;
+            }
+
+            .conversations-list.mobile-visible {
+                display: block;
+            }
+
+            .chat-container.mobile-hidden {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="index.html"><h2>🎓 Mentor Wave CUET</h2></a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#" id="backDashboardLink">Back to Dashboard</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Messaging Interface -->
+    <div class="messaging-layout">
+        <!-- Conversations List -->
+        <aside class="conversations-list">
+            <div class="conversations-header">
+                <h2>Messages</h2>
+                <input type="text" class="search-box" placeholder="Search conversations...">
+            </div>
+
+            <div class="conversations">
+                <!-- Conversation Item 1 -->
+                <div class="conversation-item active">
+                    <div class="conversation-header">
+                        <div class="user-avatar-sm">AR</div>
+                        <span class="conversation-name">Ahmed Rashid</span>
+                        <span class="conversation-time">2 min</span>
+                    </div>
+                    <div class="conversation-preview">
+                        Yes, I'm interested in this tuition opportunity...
+                    </div>
+                </div>
+
+                <!-- Conversation Item 2 -->
+                <div class="conversation-item">
+                    <div class="conversation-header">
+                        <div class="user-avatar-sm">SK</div>
+                        <span class="conversation-name">Saima Khatun</span>
+                        <span class="conversation-time">1 hour</span>
+                        <span class="unread-badge">2</span>
+                    </div>
+                    <div class="conversation-preview">
+                        Thank you for considering my application...
+                    </div>
+                </div>
+
+                <!-- Conversation Item 3 -->
+                <div class="conversation-item">
+                    <div class="conversation-header">
+                        <div class="user-avatar-sm">MH</div>
+                        <span class="conversation-name">Mahir Hasan</span>
+                        <span class="conversation-time">3 hours</span>
+                    </div>
+                    <div class="conversation-preview">
+                        When can we schedule an interview?
+                    </div>
+                </div>
+
+                <!-- Conversation Item 4 -->
+                <div class="conversation-item">
+                    <div class="conversation-header">
+                        <div class="user-avatar-sm">FR</div>
+                        <span class="conversation-name">Fatima Rahman</span>
+                        <span class="conversation-time">Yesterday</span>
+                    </div>
+                    <div class="conversation-preview">
+                        I have experience teaching mathematics...
+                    </div>
+                </div>
+
+                <!-- Conversation Item 5 -->
+                <div class="conversation-item">
+                    <div class="conversation-header">
+                        <div class="user-avatar-sm">KA</div>
+                        <span class="conversation-name">Kamal Ahmed</span>
+                        <span class="conversation-time">2 days</span>
+                    </div>
+                    <div class="conversation-preview">
+                        Looking forward to working with you
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <div class="user-avatar-sm">AR</div>
+                <h3>Ahmed Rashid</h3>
+                <button class="btn btn-secondary btn-sm">View Profile</button>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- Received Message -->
+                <div class="message message-received">
+                    <div class="message-text">
+                        Hello! I saw your tuition post for Mathematics - Class 10. 
+                        I'm a 3rd year CSE student at CUET and I have experience teaching this level.
+                    </div>
+                    <div class="message-time">10:30 AM</div>
+                </div>
+
+                <!-- Sent Message -->
+                <div class="message message-sent">
+                    <div class="message-text">
+                        Hi Ahmed! Thank you for your interest. Can you tell me more about your teaching experience?
+                    </div>
+                    <div class="message-time">10:35 AM</div>
+                </div>
+
+                <!-- Received Message -->
+                <div class="message message-received">
+                    <div class="message-text">
+                        Sure! I've been tutoring for 2 years now. I currently teach 2 students - 
+                        one in Class 10 and one in HSC. Both have shown significant improvement in their grades.
+                    </div>
+                    <div class="message-time">10:38 AM</div>
+                </div>
+
+                <!-- Received Message -->
+                <div class="message message-received">
+                    <div class="message-text">
+                        I focus on building strong fundamentals and problem-solving skills. 
+                        My students generally score A+ in mathematics.
+                    </div>
+                    <div class="message-time">10:38 AM</div>
+                </div>
+
+                <!-- Sent Message -->
+                <div class="message message-sent">
+                    <div class="message-text">
+                        That sounds great! My son is currently scoring B and we want to improve to A+. 
+                        What's your availability?
+                    </div>
+                    <div class="message-time">10:42 AM</div>
+                </div>
+
+                <!-- Received Message -->
+                <div class="message message-received">
+                    <div class="message-text">
+                        I'm available Monday to Thursday, 5-7 PM. Would that work for you?
+                    </div>
+                    <div class="message-time">10:45 AM</div>
+                </div>
+
+                <!-- Sent Message -->
+                <div class="message message-sent">
+                    <div class="message-text">
+                        Yes, that works perfectly! Can we schedule a trial class this Monday?
+                    </div>
+                    <div class="message-time">10:48 AM</div>
+                </div>
+
+                <!-- Received Message -->
+                <div class="message message-received">
+                    <div class="message-text">
+                        Yes, I'm interested in this tuition opportunity. Looking forward to meeting you!
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <form class="chat-input-form" id="messageForm">
+                    <textarea 
+                        class="chat-input" 
+                        id="messageInput" 
+                        placeholder="Type your message here..."
+                        rows="1"
+                    ></textarea>
+                    <button type="submit" class="send-btn">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Initialize messaging functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const messageForm = document.getElementById('messageForm');
+            const messageInput = document.getElementById('messageInput');
+            const chatMessages = document.getElementById('chatMessages');
+
+            // Handle message sending
+            if (messageForm) {
+                messageForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const messageText = messageInput.value.trim();
+                    if (!messageText) return;
+
+                    // Create message element
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'message message-sent';
+                    
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString('en-US', { 
+                        hour: 'numeric', 
+                        minute: '2-digit' 
+                    });
+
+                    messageDiv.innerHTML = `
+                        <div class="message-text">${messageText}</div>
+                        <div class="message-time">${timeString}</div>
+                    `;
+
+                    // Append message
+                    chatMessages.appendChild(messageDiv);
+
+                    // Clear input
+                    messageInput.value = '';
+
+                    // Scroll to bottom
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                    // Simulate received message (demo)
+                    setTimeout(() => {
+                        const receivedDiv = document.createElement('div');
+                        receivedDiv.className = 'message message-received';
+                        receivedDiv.innerHTML = `
+                            <div class="message-text">Thank you for your message! I'll get back to you shortly.</div>
+                            <div class="message-time">${timeString}</div>
+                        `;
+                        chatMessages.appendChild(receivedDiv);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 2000);
+                });
+            }
+
+            // Auto-resize textarea
+            if (messageInput) {
+                messageInput.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+                });
+            }
+
+            // Scroll to bottom on load
+            if (chatMessages) {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Handle conversation switching
+            const conversationItems = document.querySelectorAll('.conversation-item');
+            conversationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    conversationItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Remove unread badge
+                    const badge = this.querySelector('.unread-badge');
+                    if (badge) {
+                        badge.remove();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

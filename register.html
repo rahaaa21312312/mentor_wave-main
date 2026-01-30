@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Mentor Wave CUET</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="index.html"><h2>🎓 Mentor Wave CUET</h2></a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="login.html" class="btn-nav">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Registration Form Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h1>Create Account</h1>
+                    <p class="auth-subtitle">Join Mentor Wave CUET today</p>
+
+                    <!-- Role Selection Tabs -->
+                    <div class="role-tabs">
+                        <button class="role-tab active" data-role="tutor">Tutor</button>
+                        <button class="role-tab" data-role="guardian">Guardian</button>
+                    </div>
+
+                    <!-- Tutor Registration Form -->
+                    <form id="tutorRegisterForm" class="auth-form">
+                        <input type="hidden" name="role" value="tutor">
+
+                        <!-- Full Name -->
+                        <div class="form-group">
+                            <label for="tutorName">Full Name *</label>
+                            <input 
+                                type="text" 
+                                id="tutorName" 
+                                name="name" 
+                                placeholder="Enter your full name"
+                                required
+                            >
+                        </div>
+
+                        <!-- CUET Email -->
+                        <div class="form-group">
+                            <label for="tutorEmail">CUET Email Address *</label>
+                            <input 
+                                type="email" 
+                                id="tutorEmail" 
+                                name="email" 
+                                placeholder="yourname@student.cuet.ac.bd"
+                                pattern="[a-zA-Z0-9._%+-]+@student\.cuet\.ac\.bd$"
+                                required
+                            >
+                            <small class="form-hint">Must be a valid @student.cuet.ac.bd email</small>
+                        </div>
+
+                        <!-- Student ID -->
+                        <div class="form-group">
+                            <label for="studentId">Student ID *</label>
+                            <input 
+                                type="text" 
+                                id="studentId" 
+                                name="studentId" 
+                                placeholder="e.g., 1904XXX"
+                                required
+                            >
+                        </div>
+
+                        <!-- Department -->
+                        <div class="form-group">
+                            <label for="department">Department *</label>
+                            <select id="department" name="department" required>
+                                <option value="">Select Department</option>
+                                <option value="CSE">Computer Science & Engineering</option>
+                                <option value="EEE">Electrical & Electronic Engineering</option>
+                                <option value="ME">Mechanical Engineering</option>
+                                <option value="CE">Civil Engineering</option>
+                                <option value="URP">Urban & Regional Planning</option>
+                                <option value="ARCH">Architecture</option>
+                                <option value="IPE">Industrial & Production Engineering</option>
+                                <option value="ChE">Chemical Engineering</option>
+                                <option value="MME">Materials & Metallurgical Engineering</option>
+                                <option value="PME">Petroleum & Mining Engineering</option>
+                            </select>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="form-group">
+                            <label for="tutorPhone">Phone Number *</label>
+                            <input 
+                                type="tel" 
+                                id="tutorPhone" 
+                                name="phone" 
+                                placeholder="+880 1XXX-XXXXXX"
+                                pattern="[0-9+\s-]+"
+                                required
+                            >
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="form-group">
+                            <label>Gender *</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="gender" value="male" required>
+                                    <span>Male</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="gender" value="female" required>
+                                    <span>Female</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group">
+                            <label for="tutorPassword">Password *</label>
+                            <div class="password-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="tutorPassword" 
+                                    name="password" 
+                                    placeholder="Minimum 8 characters"
+                                    minlength="8"
+                                    required
+                                >
+                                <button type="button" class="password-toggle" aria-label="Show password" data-target="tutorPassword">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5z" stroke="#374151" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                      <circle cx="12" cy="12" r="3" stroke="#374151" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="form-group">
+                            <label for="tutorConfirmPassword">Confirm Password *</label>
+                            <div class="password-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="tutorConfirmPassword" 
+                                    name="confirmPassword" 
+                                    placeholder="Re-enter password"
+                                    required
+                                >
+                                <button type="button" class="password-toggle" aria-label="Show password" data-target="tutorConfirmPassword">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5z" stroke="#374151" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                      <circle cx="12" cy="12" r="3" stroke="#374151" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Terms -->
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="terms" required>
+                                <span>I agree to the <a href="#">Terms & Conditions</a></span>
+                            </label>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div id="tutorRegisterError" class="error-message" style="display: none;"></div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-block">Register as Tutor</button>
+                    </form>
+
+                    <!-- Guardian Registration Form -->
+                    <form id="guardianRegisterForm" class="auth-form" style="display: none;">
+                        <input type="hidden" name="role" value="guardian">
+
+                        <!-- Full Name -->
+                        <div class="form-group">
+                            <label for="guardianName">Full Name *</label>
+                            <input 
+                                type="text" 
+                                id="guardianName" 
+                                name="name" 
+                                placeholder="Enter your full name"
+                                required
+                            >
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="guardianEmail">Email Address *</label>
+                            <input 
+                                type="email" 
+                                id="guardianEmail" 
+                                name="email" 
+                                placeholder="your.email@example.com"
+                                required
+                            >
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="form-group">
+                            <label for="guardianPhone">Phone Number *</label>
+                            <input 
+                                type="tel" 
+                                id="guardianPhone" 
+                                name="phone" 
+                                placeholder="+880 1XXX-XXXXXX"
+                                pattern="[0-9+\s-]+"
+                                required
+                            >
+                        </div>
+
+                        <!-- Location -->
+                        <div class="form-group">
+                            <label for="location">Location *</label>
+                            <input 
+                                type="text" 
+                                id="location" 
+                                name="location" 
+                                placeholder="City, Area"
+                                required
+                            >
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group">
+                            <label for="guardianPassword">Password *</label>
+                            <div class="password-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="guardianPassword" 
+                                    name="password" 
+                                    placeholder="Minimum 8 characters"
+                                    minlength="8"
+                                    required
+                                >
+                                <button type="button" class="password-toggle" aria-label="Show password" data-target="guardianPassword">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5z" stroke="#374151" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                      <circle cx="12" cy="12" r="3" stroke="#374151" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="form-group">
+                            <label for="guardianConfirmPassword">Confirm Password *</label>
+                            <div class="password-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="guardianConfirmPassword" 
+                                    name="confirmPassword" 
+                                    placeholder="Re-enter password"
+                                    required
+                                >
+                                <button type="button" class="password-toggle" aria-label="Show password" data-target="guardianConfirmPassword">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5z" stroke="#374151" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                      <circle cx="12" cy="12" r="3" stroke="#374151" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Terms -->
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="terms" required>
+                                <span>I agree to the <a href="#">Terms & Conditions</a></span>
+                            </label>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div id="guardianRegisterError" class="error-message" style="display: none;"></div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-block">Register as Guardian</button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="login.html">Login here</a></p>
+                    </div>
+                </div>
+
+                <!-- Info Card -->
+                <div class="auth-info">
+                    <h2>Why Register?</h2>
+                    <div class="info-role" id="tutorInfo">
+                        <h3>As a Tutor:</h3>
+                        <ul class="info-list">
+                            <li>✓ Browse tuition opportunities</li>
+                            <li>✓ Build your profile</li>
+                            <li>✓ Connect with guardians</li>
+                            <li>✓ Earn while studying</li>
+                        </ul>
+                    </div>
+                    <div class="info-role" id="guardianInfo" style="display: none;">
+                        <h3>As a Guardian:</h3>
+                        <ul class="info-list">
+                            <li>✓ Post tuition requirements</li>
+                            <li>✓ Find verified CUET tutors</li>
+                            <li>✓ Secure messaging</li>
+                            <li>✓ Quick matching</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer footer-minimal">
+        <div class="container">
+            <p>&copy; 2026 Mentor Wave CUET. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

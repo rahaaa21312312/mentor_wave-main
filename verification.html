@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification - Mentor Wave CUET</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="index.html"><h2>🎓 Mentor Wave CUET</h2></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h1>Email Verification</h1>
+                    <p class="auth-subtitle">We've sent a verification code to <strong id="verifyEmail"></strong></p>
+
+                    <form id="verifyForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="verificationCode">Enter Verification Code</label>
+                            <input type="text" id="verificationCode" name="verificationCode" placeholder="123456" required maxlength="6" />
+                        </div>
+
+                        <div id="verificationMessage" style="margin-bottom:12px;color:#333;"></div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Verify</button>
+                    </form>
+
+                    <div style="margin-top:12px; display:flex; gap:8px;">
+                        <button id="resendBtn" class="btn btn-secondary">Resend Code</button>
+                        <button id="devShowCode" class="btn btn-ghost">Show Demo Code</button>
+                    </div>
+
+                    <div class="auth-footer" style="margin-top:16px;">
+                        <p>Didn't receive the code? Try resending or check your spam folder.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer footer-minimal">
+        <div class="container">
+            <p>&copy; 2026 Mentor Wave CUET.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Initialize verification page handlers when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeVerificationPage();
+        });
+    </script>
+</body>
+</html>
